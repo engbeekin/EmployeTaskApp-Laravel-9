@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class task extends Model
 {
     use HasFactory;
+      public function departments(){
+        return $this->belongsToMany(Depatment::class,'department_id','id');
+    }
 }
