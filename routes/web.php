@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EmployeController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,7 @@ Route::middleware('auth')->group(function(){
 
     Route::view('/', 'dashboard')->name('dashboard');
     Route::resource('/task',TaskController::class)->only('create','store');
+    Route::resource('/employe',EmployeController::class);
     Route::view('/test','layouts.mainlayout');
 });
 

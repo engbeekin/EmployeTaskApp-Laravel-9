@@ -8,8 +8,13 @@
 
     <link rel="stylesheet" href="{{ asset('assets/css/main/app.css') }}">
 
+    <link rel="stylesheet" href="{{ asset('assets/css/main/app-dark.css') }}">
+
     <link rel="shortcut icon" href="{{ asset('assets/images/logo/favicon.svg') }}" type="image/x-icon">
     <link rel="shortcut icon" href="assets/images/logo/favicon.png" type="image/png">
+    <link rel="stylesheet" href="{{ asset('assets/extensions/simple-datatables/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/pages/simple-datatables.css') }}">
+
 </head>
 
 <body>
@@ -71,11 +76,17 @@
                         <li class="sidebar-item has-sub">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-stack"></i>
-                                <span>Components</span>
+                                <span>Employees</span>
                             </a>
                             <ul class="submenu ">
                                 <li class="submenu-item ">
-                                    <a href="component-alert.html">Alert</a>
+                                    <a href="{{ route('employe.index') }}">All Empploye</a>
+                                </li>
+                                <li class="submenu-item ">
+                                    <a href="{{ route('employe.create') }}">Create Empploye</a>
+                                </li>
+                                <li class="submenu-item ">
+                                    <a href="{{ route('employe.create') }}">Edit Empploye</a>
                                 </li>
 
                             </ul>
@@ -170,7 +181,9 @@
                                     <div class="user-menu d-flex">
                                         <div class="user-name text-end me-3">
                                             <h6 class="mb-0 text-gray-600">{{ Auth::user()->name }}</h6>
-                                            <p class="mb-0 text-sm text-gray-600">Administrator</p>
+                                            <p class="mb-0 text-sm text-gray-600">
+                                                {{ Auth::user()->department->dep_name }} </p>
+
                                         </div>
                                         <div class="user-img d-flex align-items-center">
                                             <div class="avatar avatar-md">
@@ -210,10 +223,10 @@
                     <div class="page-title">
                         <div class="row">
                             <div class="order-last col-12 col-md-6 order-md-1">
-                                <h3>Vertical Layout with Navbar</h3>
-                                <p class="text-subtitle text-muted">Navbar will appear on the top of the page.</p>
+                                @yield('title')
+
                             </div>
-                            <div class="order-first col-12 col-md-6 order-md-2">
+                            {{-- <div class="order-first col-12 col-md-6 order-md-2">
                                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
@@ -221,7 +234,7 @@
                                         </li>
                                     </ol>
                                 </nav>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                     <section class="section">
@@ -245,11 +258,11 @@
                 <footer>
                     <div class="clearfix mb-0 footer text-muted">
                         <div class="float-start">
-                            <p>2021 &copy; Mazer</p>
+                            <p>{{ now()->year }} &copy; kalid</p>
                         </div>
                         <div class="float-end">
-                            <p>Crafted with <span class="text-danger"><i class="bi bi-heart-fill icon-mid"></i></span>
-                                by <a href="https://ahmadsaugi.com">Saugi</a></p>
+                            <p>Developed by <span class="text-danger"><i class="bi bi-heart-fill icon-mid"></i></span>
+                                by <a href="">Kalid ahmed</a></p>
                         </div>
                     </div>
                 </footer>
@@ -259,6 +272,9 @@
     <script src="{{ asset('assets/js/bootstrap.js') }}"></script>
     <script src="{{ asset('assets/js/app.js') }}"></script>
 
+    <script src="{{ asset('assets/extensions/simple-datatables/umd/simple-datatables.js') }}"></script>
+    <script src="{{ asset('assets/js/pages/simple-datatables.js') }}"></script>
+    @yield('script')
 </body>
 
 </html>
