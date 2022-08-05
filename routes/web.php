@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,12 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('auth.login');
+// });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+
+
+
+Route::middleware('auth')->group(function(){
+
+    Route::view('/', 'dashboard')->name('dashboard');
+    Route::resource('/task',TaskController::class)->only('create','store');
+    Route::view('/test','layouts.mainlayout');
+});
 
 require __DIR__.'/auth.php';
