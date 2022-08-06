@@ -1,17 +1,19 @@
 @extends('layouts.main-layout')
+
 @section('title')
-    <h3>Create New Employe</h3>
+    <h3 class="mb-3">Create New Task</h3>
 @endsection
 @section('content')
     <div class="p-5 card">
-
-        <form action="{{ route('employe.store') }}" method="POST">
+        <form action="{{ route('task.update', $task->id) }}" method="POST">
+            @csrf
+            @method('put')
             <div class="row">
-                @csrf
                 <div class="col-6">
                     <div class="form-group">
-                        <label for="basicInput">Employee Name</label>
-                        <input type="text" class="form-control" name="name" placeholder="Enter Employee Name">
+                        <label for="basicInput">Task Name</label>
+                        <input type="text" class="form-control" name="task_name" placeholder="Enter Task Name"
+                            value="{{ $task->task_name }}">
                     </div>
                 </div>
                 <div class="col-6">
@@ -25,22 +27,15 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-12">
                     <div class="mb-3 form-group">
-                        <label for="exampleFormControlTextarea1" class="form-label">Email</label>
-                        <input type="text" class="form-control" name="email" placeholder="Enter Employee Email">
+                        <label for="exampleFormControlTextarea1" class="form-label">Task Description</label>
+                        <textarea class="form-control" name="description" rows="3">{{ $task->description }}</textarea>
                     </div>
                 </div>
-                <div class="col-6">
-                    <div class="mb-3 form-group">
-                        <label for="exampleFormControlTextarea1" class="form-label">Password</label>
-                        <input type="password" class="form-control" name="password" placeholder="Enter Employee passowrd">
-                    </div>
-                </div>
-
                 <div class="col-8">
 
-                    <button class=" btn btn-primary offset-6 w-50" type="submit">Add New Employee</button>
+                    <button class=" btn btn-primary offset-6 w-50" type="submit">Edit Task</button>
 
                 </div>
             </div>

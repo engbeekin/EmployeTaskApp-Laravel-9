@@ -25,9 +25,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth')->group(function(){
 
     Route::view('/', 'dashboard')->name('dashboard');
-    Route::resource('/task',TaskController::class)->only('create','store');
+    Route::resource('/task',TaskController::class);
     Route::resource('/employe',EmployeController::class);
-    Route::view('/test','layouts.mainlayout');
+
 });
 
 require __DIR__.'/auth.php';

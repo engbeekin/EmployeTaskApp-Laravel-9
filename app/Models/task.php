@@ -14,7 +14,19 @@ class task extends Model
      * @var array
      */
     protected $guarded = ['id'];
-      public function departments(){
-        return $this->belongsToMany(Depatment::class,'department_id','id');
+      public function department()
+      {
+        return $this->belongsTo(Depatment::class);
+    }
+
+    /**
+     * Scope a query to only include
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeGetTask($query)
+    {
+        return $query->where('department_id',auth()->user()->department_id)->latest()->get();
     }
 }

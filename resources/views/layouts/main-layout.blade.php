@@ -73,6 +73,7 @@
                             </a>
                         </li>
 
+                        {{-- Employe list --}}
                         <li class="sidebar-item has-sub">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-stack"></i>
@@ -86,8 +87,25 @@
                                     <a href="{{ route('employe.create') }}">Create Empploye</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a href="{{ route('employe.create') }}">Edit Empploye</a>
+                                    <a href="{{ route('employe.edit', Auth::user()->id) }}">Edit Empploye</a>
                                 </li>
+
+                            </ul>
+                        </li>
+                        {{-- Task list --}}
+                        <li class="sidebar-item has-sub">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-stack"></i>
+                                <span>Tasks</span>
+                            </a>
+                            <ul class="submenu ">
+                                <li class="submenu-item ">
+                                    <a href="{{ route('task.index') }}">All Task</a>
+                                </li>
+                                <li class="submenu-item ">
+                                    <a href="{{ route('task.create') }}">Create Task</a>
+                                </li>
+                               
 
                             </ul>
                         </li>

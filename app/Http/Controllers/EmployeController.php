@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Models\Depatment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Requests\EmployeRequest;
+
 
 class EmployeController extends Controller
 {
@@ -17,7 +17,7 @@ class EmployeController extends Controller
      */
     public function index()
     {
-        $users=User::all();
+        $users=User::latest()->get();
         return view('employes.index',compact('users'));
 
     }
@@ -56,10 +56,19 @@ class EmployeController extends Controller
        ]);
 
 
-        return back()->with('success','Created Employe Successfully');
+        return to_route('employe.index')->with('success','Created Employe Successfully');
 
     }
-
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function show(User $user)
+    {
+        //
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -89,9 +98,22 @@ class EmployeController extends Controller
             'password'=>Hash::make($request->password),
             'department_id'=>$request->department_id
         ]);
-        return back()->with('success','Updated Employe Successfully');
+        return to_route('employe.index')->with('success','Updated Employe Successfully');
 
 
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $user=User::findOrFail($id);
+        $user->delete();
+        return back()->with('delete','Deleted Employee Successfully');
     }
 
 

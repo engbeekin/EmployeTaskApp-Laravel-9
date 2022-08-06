@@ -7,10 +7,8 @@ use App\Models\task;
 use App\Models\User;
 use App\Models\Depatment;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoretaskRequest;
 use App\Http\Requests\UpdatetaskRequest;
-use App\Notifications\NotifyEmployeeNewTask;
-use Illuminate\Support\Facades\Notification;
+
 
 class TaskController extends Controller
 {
@@ -21,7 +19,9 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
+
+        $tasks=task::getTask();
+         return view('tasks.index',compact('tasks'));
     }
 
     /**
@@ -48,7 +48,7 @@ class TaskController extends Controller
 
     TaskEvent::dispatch($task);
 
-        return to_route('dashboard');
+        return to_route('task.index')->with('success','Task Created Successfully');
     }
 
     /**
@@ -65,24 +65,28 @@ class TaskController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\task  $task
+     * @param   $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(task $task)
+    public function edit($id)
     {
-        //
+        $task=task::findOrFail($id);
+         $departments=Depatment::all('id','dep_name');
+        return view('tasks.edit',compact('task','departments'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdatetaskRequest  $request
+     * @param  \App\Http\Requests  $request
      * @param  \App\Models\task  $task
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatetaskRequest $request, task $task)
+    public function update(Request $request, $id)
     {
-        //
+         $task=task::findOrFail($id);
+         $task->update($request->all());
+         return to_route('task.index')->with('success','Task Updated Successfully');
     }
 
     /**
@@ -93,6 +97,7 @@ class TaskController extends Controller
      */
     public function destroy(task $task)
     {
-        //
+        $task->delete();
+        return to_route('task.index')->with('delete','Task Deleted Successfully');
     }
 }

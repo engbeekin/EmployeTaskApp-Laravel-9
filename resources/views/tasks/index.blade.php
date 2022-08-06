@@ -18,39 +18,42 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Name</th>
+                        <th>Task Name</th>
                         <th>Email</th>
                         <th>Department Name</th>
                         <th>Created At</th>
-                        <th>Status</th>
+
                         <th>Actions</th>
 
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($users as $user)
+                    @foreach ($tasks as $task)
                         @php
                             $i;
                         @endphp
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $user->email }}</td>
-                            <td>{{ $user->department->dep_name }}</td>
-                            <td>{{ $user->created_at }}</td>
+                            <td>{{ $task->task_name }}</td>
+
+                            <td>{{ $task->department->dep_name }}</td>
+                            <td>{{ $task->created_at }}</td>
                             <td>
                                 <span class="badge bg-success">Active</span>
                             </td>
-                            <td>
-                                <a href="{{ route('employe.edit', $user->id) }}"><i class="bi bi-eye-fill "
-                                        style="color: rgb(9, 180, 180)"></i></a>
-                                <form action="{{ route('employe.destroy', $user->id) }}" method="post">
-                                    @csrf
-                                    @method('delete')
+                            <td style="display: inline-block">
+                                <div>
 
-                                    <button type="submit"><i style="color: rgb(212, 50, 50)"
-                                            class="bi bi-trash-fill"></i></button>
-                                </form>
+                                    <a href="{{ route('task.edit', $task->id) }}"><i class="bi bi-eye-fill "
+                                            style="color: rgb(9, 180, 180)"></i></a>
+                                    <form action="{{ route('task.destroy', $task) }}" method="post">
+                                        @csrf
+                                        @method('delete')
+
+                                        <button type="submit"><i style="color: rgb(212, 50, 50)"
+                                                class="bi bi-trash-fill"></i></button>
+
+                                    </form>
                             </td>
 
                         </tr>
