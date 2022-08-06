@@ -139,6 +139,24 @@ class EmployeController extends Controller
         return back()->with('delete','Deleted Employee Successfully');
     }
 
+    /**
+     * suspended a employe to use the web
+     * we must update his status
+     * by default emp status is active or 1 so we must change to 0 to make it suspended emp.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function suspendedEmploye($id,$status)
+    {
+        // updating the employe status to inactiv or 0 to suspended him
+        $user=User::whereId($id)->update([
+            'status'=>$status,
+        ]);
+
+
+        return back()->with('success','suspended Employee Successfully');
+    }
 
 
 }

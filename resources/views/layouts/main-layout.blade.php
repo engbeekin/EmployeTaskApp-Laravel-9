@@ -81,24 +81,36 @@
                         </li>
 
                         {{-- Employe list --}}
-                        <li class="sidebar-item has-sub">
-                            <a href="#" class='sidebar-link'>
-                                <i class="bi bi-stack"></i>
-                                <span>Employees</span>
-                            </a>
-                            <ul class="submenu ">
-                                <li class="submenu-item ">
-                                    <a href="{{ route('employe.index') }}">All Empploye</a>
-                                </li>
-                                <li class="submenu-item ">
-                                    <a href="{{ route('employe.create') }}">Create Empploye</a>
-                                </li>
-                                <li class="submenu-item ">
-                                    <a href="{{ route('employe.edit', Auth::user()->id) }}">Edit Empploye</a>
-                                </li>
+                        @if (auth()->user()->role == 1)
+                            <li class="sidebar-item has-sub">
+                                <a href="#" class='sidebar-link'>
+                                    <i class="bi bi-stack"></i>
+                                    <span>Employees</span>
+                                </a>
+                                <ul class="submenu ">
+                                    <li class="submenu-item ">
+                                        <a href="{{ route('employe.index') }}">All Empploye</a>
+                                    </li>
+                                    <li class="submenu-item ">
+                                        <a href="{{ route('employe.create') }}">Create Empploye</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        @else
+                            <li class="sidebar-item has-sub">
+                                <a href="#" class='sidebar-link'>
+                                    <i class="bi bi-stack"></i>
+                                    <span>Profile</span>
+                                </a>
+                                <ul class="submenu ">
+                                    <li class="submenu-item ">
+                                        <a href="{{ route('employe.edit', Auth::user()->id) }}">Edit
+                                            Empploye</a>
+                                    </li>
+                                </ul>
+                        @endif
 
-                            </ul>
-                        </li>
+
                         {{-- Task list --}}
                         <li class="sidebar-item has-sub">
                             <a href="#" class='sidebar-link'>
@@ -109,9 +121,11 @@
                                 <li class="submenu-item ">
                                     <a href="{{ route('task.index') }}">All Task</a>
                                 </li>
-                                <li class="submenu-item ">
-                                    <a href="{{ route('task.create') }}">Create Task</a>
-                                </li>
+                                @if (auth()->check() && auth()->user()->role == 1)
+                                    <li class="submenu-item ">
+                                        <a href="{{ route('task.create') }}">Create Task</a>
+                                    </li>
+                                @endif
 
 
                             </ul>

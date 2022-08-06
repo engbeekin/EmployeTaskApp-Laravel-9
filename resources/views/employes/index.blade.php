@@ -39,7 +39,13 @@
                             <td>{{ $user->department->dep_name }}</td>
                             <td>{{ $user->created_at }}</td>
                             <td>
-                                <span class="badge bg-success">Active</span>
+                                @if ($user->status == 1)
+                                    <a href={{ route('employe.suspendedEmp', ['id' => $user->id, 'status' => 0]) }}
+                                        class="btn btn-success">Active</a>
+                                @else
+                                    <a href={{ route('employe.suspendedEmp', ['id' => $user->id, 'status' => 1]) }}
+                                        class="btn btn-danger">inActive</a>
+                                @endif
                             </td>
                             <td>
                                 <a href="{{ route('employe.edit', $user->id) }}"><i class="bi bi-eye-fill "

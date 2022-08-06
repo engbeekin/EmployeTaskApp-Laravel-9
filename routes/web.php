@@ -21,12 +21,17 @@ use Illuminate\Support\Facades\Route;
 
 
 
+Route::get('/e', function () {
+    echo 'heelo';
+});
 
 Route::middleware('auth')->group(function(){
 
-    Route::view('/', 'dashboard')->name('dashboard');
-    Route::resource('/task',TaskController::class);
+
     Route::resource('/employe',EmployeController::class);
+    Route::resource('/task',TaskController::class);
+    Route::view('/', 'dashboard')->name('dashboard');
+     Route::get('/employe/suspspend/{id}/{status}',[EmployeController::class,'suspendedEmploye'] )->name('employe.suspendedEmp');
 
 });
 

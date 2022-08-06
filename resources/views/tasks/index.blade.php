@@ -43,17 +43,18 @@
                             </td>
                             <td style="display: inline-block">
                                 <div>
+                                    @if (auth()->check() && auth()->user()->role == 1)
+                                        <a href="{{ route('task.edit', $task->id) }}"><i class="bi bi-eye-fill "
+                                                style="color: rgb(9, 180, 180)"></i></a>
+                                        <form action="{{ route('task.destroy', $task) }}" method="post">
+                                            @csrf
+                                            @method('delete')
 
-                                    <a href="{{ route('task.edit', $task->id) }}"><i class="bi bi-eye-fill "
-                                            style="color: rgb(9, 180, 180)"></i></a>
-                                    <form action="{{ route('task.destroy', $task) }}" method="post">
-                                        @csrf
-                                        @method('delete')
+                                            <button type="submit"><i style="color: rgb(212, 50, 50)"
+                                                    class="bi bi-trash-fill"></i></button>
 
-                                        <button type="submit"><i style="color: rgb(212, 50, 50)"
-                                                class="bi bi-trash-fill"></i></button>
-
-                                    </form>
+                                        </form>
+                                    @endif
                             </td>
 
                         </tr>
