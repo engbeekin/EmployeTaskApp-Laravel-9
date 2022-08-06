@@ -15,6 +15,13 @@
     <link rel="stylesheet" href="{{ asset('assets/extensions/simple-datatables/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/pages/simple-datatables.css') }}">
 
+    {{-- drag & drop image css --}}
+    <link rel="stylesheet" href="{{ asset('assets/extensions/filepond/filepond.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('assets/extensions/filepond-plugin-image-preview/filepond-plugin-image-preview.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/extensions/toastify-js/src/toastify.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/pages/filepond.css') }}">
+
 </head>
 
 <body>
@@ -105,7 +112,7 @@
                                 <li class="submenu-item ">
                                     <a href="{{ route('task.create') }}">Create Task</a>
                                 </li>
-                               
+
 
                             </ul>
                         </li>
@@ -292,6 +299,11 @@
 
     <script src="{{ asset('assets/extensions/simple-datatables/umd/simple-datatables.js') }}"></script>
     <script src="{{ asset('assets/js/pages/simple-datatables.js') }}"></script>
+
+    {{-- drag & drop image js --}}
+    <script src="{{ asset('assets/extensions/filepond/filepond.js') }}"></script>
+    <script src="{{ asset('assets/extensions/toastify-js/src/toastify.js') }}"></script>
+    <script src="{{ asset('assets/js/pages/filepond.js') }}"></script>
     @yield('script')
 </body>
 

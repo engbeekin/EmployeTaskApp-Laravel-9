@@ -5,7 +5,7 @@
 @section('content')
     <div class="p-5 card">
 
-        <form action="{{ route('employe.store') }}" method="POST">
+        <form action="{{ route('employe.store') }}" method="POST" enctype="multipart/form-data">
             <div class="row">
                 @csrf
                 <div class="col-6">
@@ -25,6 +25,44 @@
                         </select>
                     </div>
                 </div>
+                <div class="col-6">
+                    <div class="mb-3 form-group">
+                        <label for="exampleFormControlTextarea1" class="form-label">Mobile no</label>
+                        <input type="text" class="form-control" name="phone" placeholder="Enter Employee mobile no">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="mb-3 form-group">
+                        <label for="exampleFormControlTextarea1" class="form-label">Address</label>
+                        <input type="text" class="form-control" name="address" placeholder="Enter Employee address">
+                    </div>
+                </div>
+                <div class="col-12">
+                    <label for="exampleFormControlTextarea1" class="form-label">Employee Photo</label>
+                    <input type="file" name="photo" class="form-control">
+                </div>
+
+                <div class="col-6">
+                    <div class="mb-3 form-group">
+                        <label for="exampleFormControlTextarea1" class="form-label">Employee Role </label>
+                        <select name="role" class="form-control">
+                            <option disabled selected>Choose Role</option>
+                            <option value="1">Admin</option>
+                            <option value="0">Staff</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="mb-3 form-group">
+                        <label for="exampleFormControlTextarea1" class="form-label">Employee Status</label>
+                        <select name="status" class="form-control">
+                            <option disabled selected>Choose status</option>
+                            <option value="1">Active</option>
+                            <option value="0">inActive</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div class="col-6">
                     <div class="mb-3 form-group">
                         <label for="exampleFormControlTextarea1" class="form-label">Email</label>

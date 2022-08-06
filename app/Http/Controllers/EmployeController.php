@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Depatment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 
 class EmployeController extends Controller
@@ -19,7 +21,6 @@ class EmployeController extends Controller
     {
         $users=User::latest()->get();
         return view('employes.index',compact('users'));
-
     }
 
     /**
@@ -29,7 +30,6 @@ class EmployeController extends Controller
      */
     public function create()
     {
-
         $departments=Depatment::all('id','dep_name');
         return view('employes.create',compact('departments'));
     }
@@ -43,21 +43,25 @@ class EmployeController extends Controller
     public function store(Request $request)
     {
          $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required',  'min:6'],
         ]);
 
-       $user= User::create([
+            $file=$request->file('photo');
+            $fileName=time().'.'.$file->getClientOriginalExtension();
+            $file->storeAs('/public/employePhoto',$fileName);
+
+         User::create([
             'name'=>$request->name,
             'email'=>$request->email,
+            'phone'=>$request->phone,
+            'address'=>$request->address,
+            'status'=>$request->status,
+            'role'=>$request->role,
             'password'=>Hash::make($request->password),
-            'department_id'=>$request->department_id
-       ]);
-
-
+            'department_id'=>$request->department_id,
+            'photo'=>$fileName
+        ]);
         return to_route('employe.index')->with('success','Created Employe Successfully');
-
     }
     /**
      * Display the specified resource.
@@ -92,15 +96,30 @@ class EmployeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user=User::findOrFail($id)->update([
-            'name'=>$request->name,
+
+        // find the user by id
+        $user=User::findOrFail($id);
+        //image updating and uploading to Db
+        $file=$request->file('photo');
+       $fileName=time().'.'.$file->getClientOriginalExtension();
+       // deleting old image
+        Storage::delete('public/employePhoto/'.$user->photo);
+        // storing the new image to Db
+       $file->storeAs('/public/employePhoto',$fileName);
+        // updating all columns of User to Db
+            $user->update([
+                'name'=>$request->name,
             'email'=>$request->email,
+            'phone'=>$request->phone,
+            'address'=>$request->address,
+            'status'=>$request->status,
+            'role'=>$request->role,
+            'department_id'=>$request->department_id,
             'password'=>Hash::make($request->password),
-            'department_id'=>$request->department_id
+            'photo'=>$fileName
         ]);
+
         return to_route('employe.index')->with('success','Updated Employe Successfully');
-
-
     }
 
     /**
@@ -112,6 +131,8 @@ class EmployeController extends Controller
     public function destroy($id)
     {
         $user=User::findOrFail($id);
+        // deleting the old image of the user
+        Storage::delete('public/employePhoto/'.$user->photo);
         $user->delete();
         return back()->with('delete','Deleted Employee Successfully');
     }
