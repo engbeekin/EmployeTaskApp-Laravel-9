@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Events\TaskEvent;
+use App\Events\UserEvent;
+use App\Listeners\NewEmpolyeEmailListener;
 use App\Listeners\NewTaskNotificationListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -22,6 +24,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         TaskEvent::class=>[
             NewTaskNotificationListener::class
+        ],
+        UserEvent::class=>[
+            NewEmpolyeEmailListener::class
         ]
     ];
 

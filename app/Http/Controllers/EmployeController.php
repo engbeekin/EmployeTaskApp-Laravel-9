@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserEvent;
 use App\Models\User;
 use App\Models\Depatment;
 use Illuminate\Http\Request;
@@ -50,7 +51,7 @@ class EmployeController extends Controller
             $fileName=time().'.'.$file->getClientOriginalExtension();
             $file->storeAs('/public/employePhoto',$fileName);
 
-         User::create([
+        $user= User::create([
             'name'=>$request->name,
             'email'=>$request->email,
             'phone'=>$request->phone,
@@ -61,6 +62,7 @@ class EmployeController extends Controller
             'department_id'=>$request->department_id,
             'photo'=>$fileName
         ]);
+        UserEvent::dispatch($user);
         return to_route('employe.index')->with('success','Created Employe Successfully');
     }
     /**
