@@ -22,12 +22,12 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        TaskEvent::class=>[
-            NewTaskNotificationListener::class
+        TaskEvent::class => [
+            NewTaskNotificationListener::class,
         ],
-        UserEvent::class=>[
-            NewEmpolyeEmailListener::class
-        ]
+        UserEvent::class => [
+            NewEmpolyeEmailListener::class,
+        ],
     ];
 
     /**

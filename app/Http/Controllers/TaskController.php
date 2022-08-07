@@ -3,12 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Events\TaskEvent;
-use App\Models\task;
-use App\Models\User;
 use App\Models\Depatment;
+use App\Models\task;
 use Illuminate\Http\Request;
-use App\Http\Requests\UpdatetaskRequest;
-
 
 class TaskController extends Controller
 {
@@ -19,9 +16,9 @@ class TaskController extends Controller
      */
     public function index()
     {
+        $tasks = task::getTask();
 
-        $tasks=task::getTask();
-         return view('tasks.index',compact('tasks'));
+        return view('tasks.index', compact('tasks'));
     }
 
     /**
@@ -31,8 +28,9 @@ class TaskController extends Controller
      */
     public function create()
     {
-        $departments=Depatment::all('id','dep_name');
-        return view('tasks.create',compact('departments'));
+        $departments = Depatment::all('id', 'dep_name');
+
+        return view('tasks.create', compact('departments'));
     }
 
     /**
@@ -44,11 +42,11 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         //
-      $task=  task::create($request->all());
+        $task = task::create($request->all());
 
-    TaskEvent::dispatch($task);
+        TaskEvent::dispatch($task);
 
-        return to_route('task.index')->with('success','Task Created Successfully');
+        return to_route('task.index')->with('success', 'Task Created Successfully');
     }
 
     /**
@@ -59,20 +57,22 @@ class TaskController extends Controller
      */
     public function show(task $task)
     {
-        //
+        // $task=task::findOrFail($task);
+        return view('tasks.show', compact('task'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param   $id
+     * @param    $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $task=task::findOrFail($id);
-         $departments=Depatment::all('id','dep_name');
-        return view('tasks.edit',compact('task','departments'));
+        $task = task::findOrFail($id);
+        $departments = Depatment::all('id', 'dep_name');
+
+        return view('tasks.edit', compact('task', 'departments'));
     }
 
     /**
@@ -84,9 +84,10 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-         $task=task::findOrFail($id);
-         $task->update($request->all());
-         return to_route('task.index')->with('success','Task Updated Successfully');
+        $task = task::findOrFail($id);
+        $task->update($request->all());
+
+        return to_route('task.index')->with('success', 'Task Updated Successfully');
     }
 
     /**
@@ -98,6 +99,7 @@ class TaskController extends Controller
     public function destroy(task $task)
     {
         $task->delete();
-        return to_route('task.index')->with('delete','Task Deleted Successfully');
+
+        return to_route('task.index')->with('delete', 'Task Deleted Successfully');
     }
 }

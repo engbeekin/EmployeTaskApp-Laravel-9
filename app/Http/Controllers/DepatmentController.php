@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Depatment;
 use App\Http\Requests\StoreDepatmentRequest;
 use App\Http\Requests\UpdateDepatmentRequest;
+use App\Models\Depatment;
 
 class DepatmentController extends Controller
 {

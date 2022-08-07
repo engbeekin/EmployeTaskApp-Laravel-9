@@ -17,13 +17,13 @@ class BannedUser
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->check() && (auth()->user()->status==0) ) {
-            # code...
+        if (auth()->check() && (auth()->user()->status == 0)) {
+            // code...
             Auth::logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
 
-            return to_route('login')->with('error','Your Account is banned Please contact the Admin');
+            return to_route('login')->with('error', 'Your Account is banned Please contact the Admin');
         }
 
         return $next($request);

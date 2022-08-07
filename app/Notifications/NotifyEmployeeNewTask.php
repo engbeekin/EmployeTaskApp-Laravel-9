@@ -3,15 +3,17 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
 class NotifyEmployeeNewTask extends Notification
 {
     use Queueable;
+
     public $task_id;
+
     public $task_name;
+
     public $created_by;
 
     /**
@@ -19,11 +21,11 @@ class NotifyEmployeeNewTask extends Notification
      *
      * @return void
      */
-    public function __construct($task_id,$task_name,$created_by)
+    public function __construct($task_id, $task_name, $created_by)
     {
-        $this->task_id=$task_id;
-        $this->task_name=$task_name;
-        $this->created_by=$created_by;
+        $this->task_id = $task_id;
+        $this->task_name = $task_name;
+        $this->created_by = $created_by;
     }
 
     /**
@@ -60,9 +62,9 @@ class NotifyEmployeeNewTask extends Notification
     public function toArray($notifiable)
     {
         return [
-            'task_id'=>$this->task_id,
-            'task_name'=>$this->task_name,
-            'created_by'=>$this->created_by,
+            'task_id' => $this->task_id,
+            'task_name' => $this->task_name,
+            'created_by' => $this->created_by,
         ];
     }
 }

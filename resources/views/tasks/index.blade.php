@@ -41,20 +41,21 @@
                             <td>
                                 <span class="badge bg-success">Active</span>
                             </td>
-                            <td style="display: inline-block">
-                                <div>
-                                    @if (auth()->check() && auth()->user()->role == 1)
-                                        <a href="{{ route('task.edit', $task->id) }}"><i class="bi bi-eye-fill "
-                                                style="color: rgb(9, 180, 180)"></i></a>
-                                        <form action="{{ route('task.destroy', $task) }}" method="post">
-                                            @csrf
-                                            @method('delete')
+                            <td>
 
-                                            <button type="submit"><i style="color: rgb(212, 50, 50)"
-                                                    class="bi bi-trash-fill"></i></button>
+                                @if (auth()->check() && auth()->user()->role == 1)
+                                    <a href="{{ route('task.edit', $task->id) }}" type="button"><i class="bi bi-eye-fill "
+                                            style="color: rgb(9, 180, 180)"></i></a>
+                                    <form action="{{ route('task.destroy', $task) }}" method="post">
+                                        @csrf
+                                        @method('delete')
 
-                                        </form>
-                                    @endif
+                                        <button type="submit"><i style="color: rgb(212, 50, 50)"
+                                                class="bi bi-trash-fill"></i></button>
+
+                                    </form>
+                                @endif
+                                <a href="{{ route('task.show', $task) }}">show</a>
                             </td>
 
                         </tr>

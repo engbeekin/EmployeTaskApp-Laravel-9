@@ -1,4 +1,5 @@
 <?php
+
 use App\Models\Depatment;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -17,7 +18,7 @@ return new class extends Migration
             $table->id();
             $table->string('task_name');
             $table->longText('description');
-            $table->foreignIdFor(Depatment::class,'department_id');
+            $table->foreignIdFor(Depatment::class, 'department_id');
             $table->timestamps();
         });
     }

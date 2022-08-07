@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Events\UserEvent;
-use App\Models\User;
 use App\Models\Depatment;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-
 
 class EmployeController extends Controller
 {
@@ -20,8 +18,9 @@ class EmployeController extends Controller
      */
     public function index()
     {
-        $users=User::latest()->get();
-        return view('employes.index',compact('users'));
+        $users = User::latest()->get();
+
+        return view('employes.index', compact('users'));
     }
 
     /**
@@ -31,8 +30,9 @@ class EmployeController extends Controller
      */
     public function create()
     {
-        $departments=Depatment::all('id','dep_name');
-        return view('employes.create',compact('departments'));
+        $departments = Depatment::all('id', 'dep_name');
+
+        return view('employes.create', compact('departments'));
     }
 
     /**
@@ -43,28 +43,30 @@ class EmployeController extends Controller
      */
     public function store(Request $request)
     {
-         $request->validate([
+        $request->validate([
             'password' => ['required',  'min:6'],
         ]);
 
-            $file=$request->file('photo');
-            $fileName=time().'.'.$file->getClientOriginalExtension();
-            $file->storeAs('/public/employePhoto',$fileName);
+        $file = $request->file('photo');
+        $fileName = time().'.'.$file->getClientOriginalExtension();
+        $file->storeAs('/public/employePhoto', $fileName);
 
-        $user= User::create([
-            'name'=>$request->name,
-            'email'=>$request->email,
-            'phone'=>$request->phone,
-            'address'=>$request->address,
-            'status'=>$request->status,
-            'role'=>$request->role,
-            'password'=>Hash::make($request->password),
-            'department_id'=>$request->department_id,
-            'photo'=>$fileName
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'status' => $request->status,
+            'role' => $request->role,
+            'password' => Hash::make($request->password),
+            'department_id' => $request->department_id,
+            'photo' => $fileName,
         ]);
         UserEvent::dispatch($user);
-        return to_route('employe.index')->with('success','Created Employe Successfully');
+
+        return to_route('employe.index')->with('success', 'Created Employe Successfully');
     }
+
     /**
      * Display the specified resource.
      *
@@ -84,9 +86,10 @@ class EmployeController extends Controller
      */
     public function edit($id)
     {
-        $user=User::findOrFail($id);
-        $departments=Depatment::all('id','dep_name');
-        return view('employes.edit',compact('user','departments'));
+        $user = User::findOrFail($id);
+        $departments = Depatment::all('id', 'dep_name');
+
+        return view('employes.edit', compact('user', 'departments'));
     }
 
     /**
@@ -100,28 +103,28 @@ class EmployeController extends Controller
     {
 
         // find the user by id
-        $user=User::findOrFail($id);
+        $user = User::findOrFail($id);
         //image updating and uploading to Db
-        $file=$request->file('photo');
-       $fileName=time().'.'.$file->getClientOriginalExtension();
-       // deleting old image
+        $file = $request->file('photo');
+        $fileName = time().'.'.$file->getClientOriginalExtension();
+        // deleting old image
         Storage::delete('public/employePhoto/'.$user->photo);
         // storing the new image to Db
-       $file->storeAs('/public/employePhoto',$fileName);
+        $file->storeAs('/public/employePhoto', $fileName);
         // updating all columns of User to Db
-            $user->update([
-                'name'=>$request->name,
-            'email'=>$request->email,
-            'phone'=>$request->phone,
-            'address'=>$request->address,
-            'status'=>$request->status,
-            'role'=>$request->role,
-            'department_id'=>$request->department_id,
-            'password'=>Hash::make($request->password),
-            'photo'=>$fileName
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'status' => $request->status,
+            'role' => $request->role,
+            'department_id' => $request->department_id,
+            'password' => Hash::make($request->password),
+            'photo' => $fileName,
         ]);
 
-        return to_route('employe.index')->with('success','Updated Employe Successfully');
+        return to_route('employe.index')->with('success', 'Updated Employe Successfully');
     }
 
     /**
@@ -132,11 +135,12 @@ class EmployeController extends Controller
      */
     public function destroy($id)
     {
-        $user=User::findOrFail($id);
+        $user = User::findOrFail($id);
         // deleting the old image of the user
         Storage::delete('public/employePhoto/'.$user->photo);
         $user->delete();
-        return back()->with('delete','Deleted Employee Successfully');
+
+        return back()->with('delete', 'Deleted Employee Successfully');
     }
 
     /**
@@ -147,16 +151,13 @@ class EmployeController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function suspendedEmploye($id,$status)
+    public function suspendedEmploye($id, $status)
     {
         // updating the employe status to inactiv or 0 to suspended him
-        $user=User::whereId($id)->update([
-            'status'=>$status,
+        $user = User::whereId($id)->update([
+            'status' => $status,
         ]);
 
-
-        return back()->with('success','suspended Employee Successfully');
+        return back()->with('success', 'suspended Employee Successfully');
     }
-
-
 }

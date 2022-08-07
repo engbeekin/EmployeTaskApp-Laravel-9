@@ -10,7 +10,6 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
 
 class RegisteredUserController extends Controller
 {
@@ -21,8 +20,9 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-        $departments=Depatment::get();
-        return view('auth.register',compact('departments'));
+        $departments = Depatment::get();
+
+        return view('auth.register', compact('departments'));
     }
 
     /**
@@ -45,9 +45,8 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'department_id'=>$request->department_id
+            'department_id' => $request->department_id,
         ]);
-
 
         event(new Registered($user));
 

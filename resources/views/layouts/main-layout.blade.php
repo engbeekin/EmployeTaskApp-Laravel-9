@@ -71,10 +71,10 @@
                 </div>
                 <div class="sidebar-menu">
                     <ul class="menu">
-                        <li class="sidebar-title">Menu</li>
+                        <li class="sidebar-title"></li>
 
                         <li class="sidebar-item ">
-                            <a href="index.html" class='sidebar-link'>
+                            <a href="{{ route('dashboard') }}" class='sidebar-link'>
                                 <i class="bi bi-grid-fill"></i>
                                 <span>Dashboard</span>
                             </a>
@@ -136,14 +136,14 @@
 
 
 
-                        <li class="sidebar-title">Pages</li>
+                        {{-- <li class="sidebar-title">Pages</li>
 
                         <li class="sidebar-item ">
                             <a href="application-email.html" class='sidebar-link'>
                                 <i class="bi bi-envelope-fill"></i>
                                 <span>Email Application</span>
                             </a>
-                        </li>
+                        </li> --}}
 
 
 
@@ -226,7 +226,7 @@
                                         </div>
                                         <div class="user-img d-flex align-items-center">
                                             <div class="avatar avatar-md">
-                                                <img src="{{ asset('assets/images/faces/1.jpg') }}">
+                                                <img src="{{ '/storage/employePhoto/' . Auth::user()->photo }}">
                                             </div>
                                         </div>
                                     </div>
@@ -234,22 +234,23 @@
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton"
                                     style="min-width: 11rem;">
                                     <li>
-                                        <h6 class="dropdown-header">Hello, John!</h6>
+                                        <h6 class="dropdown-header">Hello, {{ Auth::user()->name }}!</h6>
                                     </li>
-                                    <li><a class="dropdown-item" href="#"><i
+                                    <li><a class="dropdown-item"
+                                            href="{{ route('employe.edit', Auth::user()->id) }}"><i
                                                 class="icon-mid bi bi-person me-2"></i> My
                                             Profile</a></li>
-                                    <li><a class="dropdown-item" href="#"><i
-                                                class="icon-mid bi bi-gear me-2"></i>
-                                            Settings</a></li>
-                                    <li><a class="dropdown-item" href="#"><i
-                                                class="icon-mid bi bi-wallet me-2"></i>
-                                            Wallet</a></li>
-                                    <li>
-                                        <hr class="dropdown-divider">
+
+
                                     </li>
-                                    <li><a class="dropdown-item" href="#"><i
-                                                class="icon-mid bi bi-box-arrow-left me-2"></i> Logout</a></li>
+                                    <li>
+                                        <form action="{{ route('logout') }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="dropdown-item" href="#"><i
+                                                    class="icon-mid bi bi-box-arrow-left me-2"></i>
+                                                Logout</button>
+                                    </li>
+                                    </form>
                                 </ul>
                             </div>
                         </div>

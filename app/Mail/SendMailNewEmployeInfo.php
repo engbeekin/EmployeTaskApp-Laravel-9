@@ -6,12 +6,13 @@ use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class SendMailNewEmployeInfo extends Mailable
 {
     use Queueable, SerializesModels;
+
     public $user;
+
     /**
      * Create a new message instance.
      *
@@ -19,7 +20,7 @@ class SendMailNewEmployeInfo extends Mailable
      */
     public function __construct(User $user)
     {
-        $this->user=$user;
+        $this->user = $user;
     }
 
     /**
